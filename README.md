@@ -1,0 +1,1 @@
+Só rodar `npm i` e depois `npm start` pra fazer funfar.
