@@ -1,0 +1,77 @@
+.navbarContainer {
+    height: 10vh;
+    width: 100%;
+    background-color: #FAF0F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60%;
+    padding: 0 5%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    height: 60%;
+    width: auto;
+    max-height: 80px;
+    object-fit: contain;
+    display: block;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.link {
+    text-decoration: none;
+    color: #000000;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 50%;
+    background-color: #380016;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+}
+
+.link:hover {
+    color: #380016;
+}
+
+.link:hover::after {
+    width: 100%;
+}
+
+/* Container do perfil */
+.profileContainer {
+    background-color: #FFFFFF;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profileIcon {
+    color: #000000;
+    width: 24px;
+    height: 24px;
+}

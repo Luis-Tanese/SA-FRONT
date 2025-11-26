@@ -1,0 +1,12 @@
+.bannerContainer {
+    width: 100%;
+    display: block;
+    line-height: 0;
+}
+
+.bannerImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
