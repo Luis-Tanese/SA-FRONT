@@ -1,0 +1,86 @@
+/* Área do footer */
+.footerContainer {
+    height: 33vh;
+    width: 100%;
+    background: linear-gradient(90deg, #380016 0%, #6C002A 50%, #380016 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5%;
+    box-sizing: border-box;
+    color: #FAF0F0;
+    gap: 1rem;
+}
+
+/* Conteúdo principal */
+.mainContent {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 220px;
+    margin-top: 1.5rem;
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+.menuLinks {
+    display: flex;
+    gap: 50px;
+}
+
+.link {
+    text-decoration: none;
+    color: #FAF0F0;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* Redes Sociais */
+.socials {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.socialIcon {
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.socialIcon:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+/* Copyright e Divisor */
+.bottomArea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.divider {
+    width: 65%;
+    height: 1px;
+    background-color: rgba(250, 240, 240, 0.3);
+}
+
+.copyright {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0;
+}
