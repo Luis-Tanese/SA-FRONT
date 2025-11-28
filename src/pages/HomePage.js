@@ -1,17 +1,24 @@
 import React from "react";
-import { IconCode } from "@tabler/icons-react";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import BannerFluxity from "../components/layout/Bannerfluxity";
+import TextoSobreUm from "../components/layout/TextoSobreUm";
+import TextoSobreDois from "../components/layout/TextoSobreDois";
 
-function HomePage() {
-    return (
-        <div className="text-center mt-5">
-            <IconCode size={48} strokeWidth={1.5} />
-            <h1 className="mt-3">Página Inicial</h1>
-            <p className="lead">
-                Esta é uma página placeholder gurizada.
-            </p>
-            <p>Quem for fazer essa bomba n se esqueça de arrumar.</p>
-        </div>
-    );
-}
+const HomePage = () => {
+	return (
+		<div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", width: "100%" }}>
+			<Navbar />
+
+			<main style={{ flex: 1, backgroundColor: "#ffffffff", width: "100%" }}>
+				<BannerFluxity />
+				<TextoSobreUm />
+				<TextoSobreDois />
+			</main>
+
+			<Footer />
+		</div>
+	);
+};
 
 export default HomePage;

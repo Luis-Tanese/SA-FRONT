@@ -1,25 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Navbar as NavbarBS, Nav } from "react-bootstrap";
+import { IconUser } from "@tabler/icons-react";
+import styles from "../../styles/Navbar.module.css";
+import LogoFluxity from "../../images/LogoFluxity.png";
 
-function Navbar() {
+const Navbar = () => {
     return (
-        <NavbarBS bg="dark" variant="dark" expand="lg">
-            <Container>
-                <NavbarBS.Brand as={Link} to="/">
-                    Projeto S.A.
-                </NavbarBS.Brand>
-                <NavbarBS.Toggle aria-controls="basic-navbar-nav" />
-                <NavbarBS.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link as={Link} to="/">
-                            Home
-                        </Nav.Link>
-                    </Nav>
-                </NavbarBS.Collapse>
-            </Container>
-        </NavbarBS>
+        <nav className={styles.navbarContainer}>
+            <Link to="/">
+                <img src={LogoFluxity} alt="Fluxity Logo" className={styles.logo} />
+            </Link>
+
+            <div className={styles.navLinks}>
+                <Link to="/empresa" className={styles.link}>Empresa</Link>
+                <Link to="/produto" className={styles.link}>Produto</Link>
+                <Link to="/compra" className={styles.link}>Compra</Link>
+                <Link to="/pce" className={styles.link}>P.C.E's</Link>
+                <Link to="/profile" className={styles.profileContainer}>
+                    <IconUser className={styles.profileIcon} stroke={2} />
+                </Link>
+            </div>
+        </nav>
     );
-}
+};
 
 export default Navbar;

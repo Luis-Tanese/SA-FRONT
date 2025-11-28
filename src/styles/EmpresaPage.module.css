@@ -1,0 +1,295 @@
+/* src/pages/EmpresaPage.module.css */
+
+.pageContainer {
+    background-color: #fdfdfd;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Poppins", sans-serif;
+}
+
+.banner {
+    width: 100%;
+    height: 250px;
+    background-color: #380016;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 5%;
+    box-sizing: border-box;
+}
+
+.contentWrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: flex-start;
+}
+
+.reviewsSidebar {
+    width: 280px;
+    flex-shrink: 0;
+    
+    margin-top: -150px; 
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.avatarWrapper {
+    width: 220px;
+    height: 220px;
+    background-color: #ffffff;
+    border: 4px solid #e0e0e0;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 4rem;
+}
+
+.editAvatarBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+.ratingSummary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+    justify-content: center;
+}
+
+.starYellow {
+    color: #FFD700;
+    fill: #FFD700;
+}
+
+.totalReviews {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #000;
+}
+
+.reviewsTitle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #000;
+    align-self: flex-start;
+    padding-left: 10px;
+}
+
+.reviewsList {
+    width: 100%;
+    max-height: 400px; 
+    overflow-y: auto;  
+    padding-right: 10px;
+    text-align: left;
+}
+
+.reviewsList::-webkit-scrollbar {
+    width: 6px;
+}
+.reviewsList::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+.reviewsList::-webkit-scrollbar-thumb {
+    background-color: #a00037; 
+    border-radius: 4px;
+}
+
+.reviewItem {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    align-items: flex-start;
+}
+
+.reviewAvatar {
+    width: 40px;
+    height: 40px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.reviewContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewUser {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.reviewStars {
+    display: flex;
+    gap: 2px;
+}
+
+.reviewText {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    margin-top: -90px; 
+
+    position: relative;
+    z-index: 10; 
+}
+
+.headerInfo {
+    margin-bottom: 2rem;
+}
+
+.companyName {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    position: relative;
+    z-index: 11;
+}
+
+.bioContainer {
+    color: #000000;
+    margin-top: 4rem; 
+}
+
+.bioTitle {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+}
+
+.bioText {
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.5;
+    max-width: 600px;
+}
+
+.seeMore {
+    color: #888;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.formCard {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.formTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #000;
+}
+
+.formGroup {
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #000;
+}
+
+.input {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.row .formGroup {
+    flex: 1;
+}
+
+.submitBtn {
+    width: 100%;
+    background-color: #a00037;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 25px;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.submitBtn:hover {
+    background-color: #7c002b;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+    .contentWrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .reviewsSidebar {
+        width: 100%;
+        max-width: 300px;
+        margin-top: -100px;
+    }
+
+    .mainContent {
+        margin-top: 0; /* No mobile, volta ao normal */
+        text-align: center;
+    }
+    
+    .companyName {
+        color: #000; /* No mobile vira preto */
+        text-shadow: none;
+        margin-top: 1rem;
+    }
+
+    .bioContainer {
+        margin-top: 1rem;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+}

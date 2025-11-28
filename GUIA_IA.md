@@ -50,12 +50,12 @@ A configuração é a seguinte:
 
 ```json
 {
-    "semi": true,
-    "trailingComma": "es5",
-    "singleQuote": false,
-    "printWidth": 120,
-    "tabWidth": 4,
-    "useTabs": false
+	"semi": true,
+	"trailingComma": "es5",
+	"singleQuote": false,
+	"printWidth": 120,
+	"tabWidth": 4,
+	"useTabs": false
 }
 ```
 

@@ -1,21 +1,23 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
-
-import Layout from "./components/layout/Layout";
-
+import EmpresaPage from "./pages/EmpresaPage";
 import HomePage from "./pages/HomePage";
+import UserPage from "./pages/UserPage";
 
 function App() {
-    return (
-        <Layout>
-            <Container className="my-4">
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                </Routes>
-            </Container>
-        </Layout>
-    );
+	return (
+		<div className="App">
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+
+				<Route path="/perfil" element={<UserPage />} />
+
+				<Route path="/empresa" element={<UserPage />} />
+
+				<Route path="/perfilEmpresa" element={<EmpresaPage />} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
