@@ -8,19 +8,13 @@
     font-family: "Poppins", sans-serif;
 }
 
-/* Banner superior */
 .banner {
     width: 100%;
     height: 250px;
     background-color: #380016; 
     position: relative;
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem 5%;
-    box-sizing: border-box;
 }
 
-/* Container principal centralizado */
 .contentContainer {
     width: 100%;
     max-width: 1200px;
@@ -32,34 +26,41 @@
     margin-bottom: 4rem;
 }
 
-/* Seção do Perfil (Foto e Bio) */
 .profileSection {
     display: flex;
     gap: 2rem;
     align-items: flex-end;
-    margin-top: -120px; 
+    margin-top: -80px; 
     margin-bottom: 2rem;
     position: relative;
+    z-index: 2;
 }
 
 .avatarWrapper {
-    width: 220px;
-    height: 220px;
+    width: 180px;
+    height: 180px;
     background-color: #ffffff;
-    border: 4px solid #e0e0e0;
+    border: 4px solid #fff;
+    border-radius: 50%; /* Foto redonda fica melhor no layout moderno */
     position: relative;
     flex-shrink: 0;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.editAvatarBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #666;
+.avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatarPlaceholder {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .userInfo {
@@ -70,19 +71,19 @@
 .userName {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #ffffff; 
-    margin-bottom: 4rem;
-    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #000; 
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
 }
 
 .bioContainer {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     color: #000000;
 }
 
 .bioTitle {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 0.2rem;
 }
 
@@ -93,28 +94,57 @@
     max-width: 600px;
 }
 
-.seeMore {
-    color: #888;
-    font-size: 0.8rem;
-    margin-left: 5px;
-    cursor: pointer;
+.splitSection {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .formCard {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     padding: 2rem;
-    width: 100%;
-    max-width: 750px;
-    align-self: center; 
+    flex: 1.2; /* Um pouco maior que a lista */
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    height: fit-content;
+}
+
+.cardHeaderRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
 }
 
 .formTitle {
     font-size: 1.25rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin: 0;
     color: #000;
+}
+
+/* --- ESTILO DO BOTÃO LOGOUT --- */
+.logoutBtn {
+    background-color: #ffeaea;
+    color: #d63939;
+    border: 1px solid #d63939;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+    background-color: #d63939;
+    color: #ffffff;
 }
 
 .formGroup {
@@ -124,14 +154,15 @@
 }
 
 .label {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 0.5rem;
-    color: #000;
+    font-weight: 600;
+    color: #444;
 }
 
 .input {
-    background-color: #e6e6e6;
-    border: none;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
     border-radius: 8px;
     padding: 0.8rem 1rem;
     font-size: 1rem;
@@ -139,10 +170,12 @@
     width: 100%;
     box-sizing: border-box;
     outline: none;
+    transition: border-color 0.2s;
 }
 
 .input:focus {
-    box-shadow: 0 0 0 2px #380016;
+    border-color: #380016;
+    background-color: #fff;
 }
 
 .submitBtn {
@@ -152,8 +185,8 @@
     font-weight: 700;
     font-size: 1.1rem;
     border: none;
-    border-radius: 25px; 
-    padding: 0.8rem;
+    border-radius: 8px; 
+    padding: 12px;
     margin-top: 1rem;
     cursor: pointer;
     transition: background 0.3s;
@@ -163,8 +196,102 @@
     background-color: #7c002b;
 }
 
-/* Responsividade básica */
-@media (max-width: 768px) {
+/* Card de Compras */
+.ordersCard {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 2rem;
+    flex: 1;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    height: fit-content;
+}
+
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.pceItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.pceIconBox {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pceInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.pceName {
+    font-weight: 700;
+    color: #380016;
+    font-size: 1rem;
+}
+
+.pceDate {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+}
+
+.renameBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    padding: 0;
+    margin-left: 8px;
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.renameBtn:hover {
+    color: #380016;
+}
+
+.editNameBox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.miniInput {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.iconBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 900px) {
     .profileSection {
         flex-direction: column;
         align-items: center;
@@ -172,9 +299,7 @@
         text-align: center;
     }
 
-    .userName {
-        color: #000; 
-        text-shadow: none;
-        margin-top: 1rem;
+    .splitSection {
+        flex-direction: column;
     }
 }

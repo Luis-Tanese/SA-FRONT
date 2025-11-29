@@ -1,0 +1,188 @@
+.pageContainer {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+
+.mainContent {
+    display: flex;
+    flex: 1;
+    min-height: 80vh;
+}
+
+/* Lado Esquerdo */
+.leftPanel {
+    flex: 0.4;
+    background: linear-gradient(180deg, #1a0508 0%, #000000 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.bannerContent {
+    text-align: center;
+    z-index: 2;
+    padding: 2rem;
+}
+
+.fluxityTitle {
+    font-size: 4rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+}
+
+.subTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.highlight {
+    color: #a00037;
+    font-weight: 700;
+}
+
+.imageContainer {
+    margin-top: 2rem;
+}
+
+.doorImage {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    /* Efeito de brilho da imagem original */
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+}
+
+/* Lado Direito */
+.rightPanel {
+    flex: 0.6;
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 5%;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 600px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end; /* Alinha o input com o box de preview */
+    margin-bottom: 1rem;
+}
+
+.label {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+    color: #000;
+}
+
+.input {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.textarea {
+    resize: none;
+}
+
+.urlPreviewBox {
+    width: 100px;
+    height: 48px; /* Altura aproximada do input */
+    background-color: #d9d9d9;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #333;
+    flex-shrink: 0;
+    margin-bottom: 2px; /* Ajuste fino */
+}
+
+.checkboxWrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+.checkboxLabel {
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.btnAdd {
+    background-color: #a00037;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 0;
+    width: 100%;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btnAdd:hover {
+    background-color: #7c002b;
+}
+
+.btnCancel {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btnCancel:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .mainContent {
+        flex-direction: column;
+    }
+    .leftPanel {
+        padding: 3rem 1rem;
+    }
+}

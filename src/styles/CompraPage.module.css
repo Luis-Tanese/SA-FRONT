@@ -1,0 +1,240 @@
+.pageContainer {
+    background-color: #380016; /* Fundo vinho escuro conforme imagem */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.contentWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 5%;
+}
+
+.cardsContainer {
+    display: flex;
+    gap: 2rem;
+    max-width: 1100px;
+    width: 100%;
+}
+
+/* Card Esquerdo: Carrinho */
+.cartCard {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 1.5rem;
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.searchBar {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin-bottom: 1rem;
+}
+
+.searchInput {
+    border: none;
+    flex: 1;
+    outline: none;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.addBtn {
+    background: none;
+    border: 2px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.itemsList {
+    flex: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.itemRow {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg, #d9d9d9 0%, #ffffff 100%);
+    border: 2px solid #000;
+    border-radius: 15px;
+    padding: 10px;
+    gap: 15px;
+}
+
+.itemImg {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.itemInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemName {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #000;
+}
+
+.itemDesc {
+    font-size: 0.8rem;
+    color: #333;
+}
+
+.removeBtn {
+    background-color: #a00037;
+    border: none;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* Rodapé do Carrinho (Preto) */
+.summaryFooter {
+    background-color: #000000;
+    color: #FFFFFF;
+    margin: 1rem -1.5rem -1.5rem -1.5rem; /* Estica para as bordas */
+    padding: 2rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.summaryCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summaryLabel {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.totalPrice, .totalUnits {
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+/* Card Direito: Pagamento */
+.paymentCard {
+    background-color: #FAF0F0;
+    border-radius: 20px;
+    padding: 2rem;
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cardIconsRow {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.cardIconPlaceholder {
+    width: 50px;
+    height: 30px;
+    background-color: #d9d9d9;
+    border-radius: 4px;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #000;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #d9d9d9;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.paymentActions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btnFinish {
+    background-color: #a00037;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btnFinish:hover {
+    background-color: #7c002b;
+}
+
+.btnCancel {
+    background-color: transparent;
+    color: #a00037;
+    border: 2px solid #a00037;
+    border-radius: 20px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btnCancel:hover {
+    background-color: rgba(160, 0, 55, 0.1);
+}
+
+@media (max-width: 900px) {
+    .cardsContainer {
+        flex-direction: column;
+    }
+}
