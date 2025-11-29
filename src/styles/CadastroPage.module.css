@@ -1,0 +1,184 @@
+/* src/styles/CadastroPage.module.css */
+
+.pageWrapper {
+    background-color: #2b0a0f;
+    /* Coloque a imagem da porta fechada na pasta assets */
+    background-image: url("../images/fundoCadastro.png");
+    background-size: 100% 100%; /* Sem zoom, preenche tela inteira */
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 15%; /* Mantém o alinhamento à esquerda */
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem 3rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: #380016;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+}
+
+/* --- Estilo das Abas (Tabs) --- */
+.tabContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 2rem;
+}
+
+.tabItem {
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 2px;
+    transition: all 0.2s ease;
+}
+
+.tabItem:hover {
+    color: #380016;
+}
+
+.activeTab {
+    font-weight: 700;
+    color: #380016;
+    border-bottom: 2px solid #380016;
+}
+
+/* --- Estilo do Formulário --- */
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.input {
+    background-color: #e6e6e6 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 10px 15px !important;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.95rem;
+    color: #333;
+    height: 45px;
+}
+
+.input:focus {
+    background-color: #e6e6e6 !important;
+    box-shadow: 0 0 0 2px rgba(160, 0, 55, 0.2) !important;
+    outline: none;
+}
+
+/* Grupo Senha */
+.passwordInput {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
+}
+
+.eyeIconWrapper {
+    background-color: #e6e6e6 !important;
+    border: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Linha para Endereço e CNPJ */
+.rowGroup {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Botão */
+.submitBtn {
+    background-color: #a00037 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    color: white !important;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 10px;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submitBtn:hover {
+    background-color: #7c002b !important;
+    transform: scale(1.02);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.backLink {
+    color: #333;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .pageWrapper {
+        justify-content: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        background-size: cover; /* No mobile, evita distorção */
+        background-position: left center;
+    }
+
+    .card {
+        padding: 2rem;
+        max-width: 100%;
+    }
+
+    .rowGroup {
+        flex-direction: column; /* Em telas pequenas, endereço e CNPJ ficam um embaixo do outro */
+        gap: 0;
+    }
+}

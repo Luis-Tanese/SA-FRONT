@@ -1,0 +1,139 @@
+/* src/styles/LoginPage.module.css */
+
+.pageWrapper {
+    background-color: #2b0a0f;
+    /* Certifique-se de que a imagem existe neste caminho */
+    background-image: url("../images/fundoLogin.png");
+    
+    /* ALTERAÇÃO AQUI: Mudado de 'cover' para '100% 100%' para remover o zoom e mostrar a imagem inteira */
+    background-size: 100% 100%;
+    
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* Mantém o card alinhado à esquerda conforme o Figma */
+    padding-left: 15%; 
+    box-sizing: border-box;
+}
+
+.loginCard {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem 3rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    z-index: 10;
+}
+
+.title {
+    color: #380016;
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.input {
+    background-color: #e6e6e6 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    color: #333;
+    height: 50px;
+}
+
+.input:focus {
+    background-color: #e6e6e6 !important;
+    box-shadow: 0 0 0 2px #380016;
+    outline: none;
+}
+
+.passwordInput {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: none !important;
+}
+
+.eyeIconWrapper {
+    background-color: #e6e6e6 !important;
+    border: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submitBtn {
+    background-color: #a00037 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    color: white !important;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 12px;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submitBtn:hover {
+    background-color: #7c002b !important;
+    transform: scale(1.02);
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.footer a {
+    color: #4dabf7;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 5px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .pageWrapper {
+        justify-content: center;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        /* No mobile, voltamos para cover para não distorcer a imagem verticalmente */
+        background-size: cover; 
+        background-position: left center;
+    }
+
+    .loginCard {
+        padding: 2rem;
+        max-width: 100%;
+    }
+}

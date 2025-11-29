@@ -16,7 +16,7 @@ const Navbar = () => {
                 <Link to="/produto" className={styles.link}>Produto</Link>
                 <Link to="/compra" className={styles.link}>Compra</Link>
                 <Link to="/pce" className={styles.link}>P.C.E's</Link>
-                <Link to="/profile" className={styles.profileContainer}>
+                <Link to="/perfil" className={styles.profileContainer}>
                     <IconUser className={styles.profileIcon} stroke={2} />
                 </Link>
             </div>
