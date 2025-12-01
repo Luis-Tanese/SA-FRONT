@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-    IconPencil, 
-    IconDeviceDesktopAnalytics, 
-    IconCheck, 
-    IconX, 
-    IconLogout 
+import {
+    IconPencil,
+    IconDeviceDesktopAnalytics,
+    IconCheck,
+    IconX,
+    IconLogout,
+    IconTrash,
+    IconPlus,
 } from "@tabler/icons-react";
 import NavbarVoltar from "../components/layout/NavbarVoltar";
 import api from "../services/api";
@@ -14,7 +16,7 @@ import styles from "../styles/UserPage.module.css";
 const UserPage = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const [orders, setOrders] = useState([]);
+    const [pces, setPces] = useState([]);
     const [loading, setLoading] = useState(false);
 
     // Form states
@@ -25,7 +27,7 @@ const UserPage = () => {
     const [bannerUrl, setBannerUrl] = useState("");
 
     // State para edição de nome de PCE
-    const [editingItemId, setEditingItemId] = useState(null);
+    const [editingPceId, setEditingPceId] = useState(null);
     const [tempPceName, setTempPceName] = useState("");
 
     useEffect(() => {
@@ -34,7 +36,7 @@ const UserPage = () => {
             navigate("/login");
             return;
         }
-        
+
         if (session.type === "empresa") {
             navigate("/perfilEmpresa");
             return;
@@ -47,23 +49,23 @@ const UserPage = () => {
         setAvatarUrl(session.avatar || "");
         setBannerUrl(session.banner || "");
 
-        loadOrders(session.id);
+        loadPCEs(session.id);
     }, [navigate]);
 
-    const loadOrders = async (userId) => {
-        const userOrders = await api.getUserOrders(userId);
-        setOrders(userOrders);
+    const loadPCEs = async (userId) => {
+        const userPces = await api.getUserPCEs(userId);
+        setPces(userPces);
     };
 
     const handleUpdate = async () => {
         setLoading(true);
         try {
-            const response = await api.updateUser(user.id, { 
-                name, 
-                email, 
-                bio, 
-                avatar: avatarUrl, 
-                banner: bannerUrl 
+            const response = await api.updateUser(user.id, {
+                name,
+                email,
+                bio,
+                avatar: avatarUrl,
+                banner: bannerUrl,
             });
             if (response.success) {
                 alert("Dados atualizados com sucesso!");
@@ -80,29 +82,41 @@ const UserPage = () => {
     const handleLogout = () => {
         const confirmExit = window.confirm("Tem certeza que deseja sair?");
         if (confirmExit) {
-            api.logout(); // Limpa a sessão
-            navigate("/"); // Redireciona para Home
+            api.logout();
+            navigate("/");
         }
     };
 
     // Funções para renomear PCE
-    const startEditingPce = (item) => {
-        setEditingItemId(item.uniqueId);
-        setTempPceName(item.customName);
+    const startEditingPce = (pce) => {
+        setEditingPceId(pce.id);
+        setTempPceName(pce.nome);
     };
 
     const cancelEditingPce = () => {
-        setEditingItemId(null);
+        setEditingPceId(null);
         setTempPceName("");
     };
 
-    const savePceName = async (orderId, itemUniqueId) => {
+    const savePceName = async (pceId) => {
         try {
-            await api.updateOrderItemName(user.id, orderId, itemUniqueId, tempPceName);
-            await loadOrders(user.id);
-            setEditingItemId(null);
+            await api.renamePCE(user.id, pceId, tempPceName);
+            await loadPCEs(user.id);
+            setEditingPceId(null);
         } catch (error) {
-            alert("Erro ao renomear dispositivo.");
+            alert("Erro ao renomear dispositivo: " + error.message);
+        }
+    };
+
+    // Deletar PCE
+    const handleDeletePce = async (pceId) => {
+        if (window.confirm("Tem certeza que deseja excluir este PCE?")) {
+            try {
+                await api.deletePCE(user.id, pceId);
+                await loadPCEs(user.id);
+            } catch (error) {
+                alert("Erro ao excluir PCE: " + error.message);
+            }
         }
     };
 
@@ -112,12 +126,12 @@ const UserPage = () => {
         <div className={styles.pageContainer}>
             <NavbarVoltar />
 
-            <div 
-                className={styles.banner} 
-                style={{ 
+            <div
+                className={styles.banner}
+                style={{
                     backgroundImage: bannerUrl ? `url(${bannerUrl})` : "none",
                     backgroundSize: "cover",
-                    backgroundPosition: "center"
+                    backgroundPosition: "center",
                 }}
             ></div>
 
@@ -131,14 +145,18 @@ const UserPage = () => {
                         )}
                     </div>
                     <div className={styles.userInfo}>
-                        <h1 className={styles.userName} style={{ color: bannerUrl ? "#FFF" : "#000", textShadow: bannerUrl ? "0 2px 4px rgba(0,0,0,0.5)" : "none" }}>
+                        <h1
+                            className={styles.userName}
+                            style={{
+                                color: bannerUrl ? "#FFF" : "#000",
+                                textShadow: bannerUrl ? "0 2px 4px rgba(0,0,0,0.5)" : "none",
+                            }}
+                        >
                             {user.name}
                         </h1>
                         <div className={styles.bioContainer}>
                             <h3 className={styles.bioTitle}>Biografia</h3>
-                            <p className={styles.bioText}>
-                                {bio || "Adicione uma biografia..."}
-                            </p>
+                            <p className={styles.bioText}>{bio || "Adicione uma biografia..."}</p>
                         </div>
                     </div>
                 </div>
@@ -148,7 +166,7 @@ const UserPage = () => {
                     <div className={styles.formCard}>
                         <div className={styles.cardHeaderRow}>
                             <h2 className={styles.formTitle}>Editar Perfil</h2>
-                            
+
                             {/* BOTÃO DE LOGOUT */}
                             <button onClick={handleLogout} className={styles.logoutBtn} title="Sair da conta">
                                 <IconLogout size={20} />
@@ -216,50 +234,89 @@ const UserPage = () => {
 
                     {/* Lista de PCEs */}
                     <div className={styles.ordersCard}>
-                        <h2 className={styles.formTitle}>Meus Dispositivos</h2>
-                        
-                        {orders.length === 0 ? (
-                            <p style={{ color: "#666" }}>Você ainda não comprou dispositivos.</p>
+                        <div className={styles.pcesHeader}>
+                            <h2 className={styles.formTitle}>Meus Dispositivos</h2>
+                            <button
+                                onClick={() => navigate("/adicionar-pce")}
+                                className={styles.addPceBtn}
+                                title="Adicionar novo PCE"
+                            >
+                                <IconPlus size={18} />
+                            </button>
+                        </div>
+
+                        {pces.length === 0 ? (
+                            <div className={styles.emptyPces}>
+                                <p style={{ color: "#666" }}>Você ainda não possui dispositivos cadastrados.</p>
+                                <button onClick={() => navigate("/adicionar-pce")} className={styles.addFirstPceBtn}>
+                                    Adicionar primeiro PCE
+                                </button>
+                            </div>
                         ) : (
                             <div className={styles.ordersList}>
-                                {orders.map((order) => (
-                                    <React.Fragment key={order.id}>
-                                        {order.items.map((item) => (
-                                            <div key={item.uniqueId} className={styles.pceItem}>
-                                                <div className={styles.pceIconBox}>
-                                                    <IconDeviceDesktopAnalytics size={24} color="#380016"/>
+                                {pces.map((pce) => (
+                                    <div key={pce.id} className={styles.pceItem}>
+                                        <div className={styles.pceIconBox}>
+                                            {pce.urlImagem ? (
+                                                <img
+                                                    src={pce.urlImagem}
+                                                    alt={pce.nome}
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "cover",
+                                                        borderRadius: "5px",
+                                                    }}
+                                                />
+                                            ) : (
+                                                <IconDeviceDesktopAnalytics size={24} color="#380016" />
+                                            )}
+                                        </div>
+
+                                        <div className={styles.pceInfo}>
+                                            {editingPceId === pce.id ? (
+                                                <div className={styles.editNameBox}>
+                                                    <input
+                                                        type="text"
+                                                        value={tempPceName}
+                                                        onChange={(e) => setTempPceName(e.target.value)}
+                                                        className={styles.miniInput}
+                                                        autoFocus
+                                                    />
+                                                    <button
+                                                        onClick={() => savePceName(pce.id)}
+                                                        className={styles.iconBtn}
+                                                    >
+                                                        <IconCheck size={18} color="green" />
+                                                    </button>
+                                                    <button onClick={cancelEditingPce} className={styles.iconBtn}>
+                                                        <IconX size={18} color="red" />
+                                                    </button>
                                                 </div>
-                                                
-                                                <div className={styles.pceInfo}>
-                                                    {editingItemId === item.uniqueId ? (
-                                                        <div className={styles.editNameBox}>
-                                                            <input 
-                                                                type="text" 
-                                                                value={tempPceName}
-                                                                onChange={(e) => setTempPceName(e.target.value)}
-                                                                className={styles.miniInput}
-                                                                autoFocus
-                                                            />
-                                                            <button onClick={() => savePceName(order.id, item.uniqueId)} className={styles.iconBtn}>
-                                                                <IconCheck size={18} color="green" />
-                                                            </button>
-                                                            <button onClick={cancelEditingPce} className={styles.iconBtn}>
-                                                                <IconX size={18} color="red" />
-                                                            </button>
-                                                        </div>
-                                                    ) : (
-                                                        <>
-                                                            <span className={styles.pceName}>{item.customName}</span>
-                                                            <button onClick={() => startEditingPce(item)} className={styles.renameBtn}>
-                                                                <IconPencil size={14} />
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                    <small className={styles.pceDate}>ID: {item.uniqueId.slice(-4)}</small>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </React.Fragment>
+                                            ) : (
+                                                <>
+                                                    <span className={styles.pceName}>{pce.nome}</span>
+                                                    <button
+                                                        onClick={() => startEditingPce(pce)}
+                                                        className={styles.renameBtn}
+                                                    >
+                                                        <IconPencil size={14} />
+                                                    </button>
+                                                </>
+                                            )}
+                                            <small className={styles.pceDate}>
+                                                Nº {pce.numeroPCE} | Cap: {pce.capacidade || 0}
+                                            </small>
+                                        </div>
+
+                                        <button
+                                            onClick={() => handleDeletePce(pce.id)}
+                                            className={styles.deletePceBtn}
+                                            title="Excluir PCE"
+                                        >
+                                            <IconTrash size={16} color="#c0392b" />
+                                        </button>
+                                    </div>
                                 ))}
                             </div>
                         )}

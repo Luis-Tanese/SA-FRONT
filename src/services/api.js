@@ -1,139 +1,227 @@
 /* src/services/api.js */
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
 
-// Inicializa dados no LocalStorage se não existirem
-const initializeMockData = () => {
-    if (!localStorage.getItem("fluxity_users")) {
-        localStorage.setItem("fluxity_users", JSON.stringify([]));
-    }
-    if (!localStorage.getItem("fluxity_orders")) {
-        localStorage.setItem("fluxity_orders", JSON.stringify([]));
-    }
-    if (!localStorage.getItem("fluxity_pces")) {
-        localStorage.setItem("fluxity_pces", JSON.stringify([]));
+// Helper to get auth token from localStorage
+const getToken = () => {
+    return localStorage.getItem("fluxity_token");
+};
+
+// Helper to save auth token to localStorage
+const setToken = (token) => {
+    if (token) {
+        localStorage.setItem("fluxity_token", token);
+    } else {
+        localStorage.removeItem("fluxity_token");
     }
 };
 
-initializeMockData();
+// Helper to save session to localStorage (for quick access without API call)
+const setSessionCache = (user) => {
+    if (user) {
+        localStorage.setItem("fluxity_session", JSON.stringify(user));
+    } else {
+        localStorage.removeItem("fluxity_session");
+    }
+};
+
+// Helper to get cached session
+const getSessionCache = () => {
+    const session = localStorage.getItem("fluxity_session");
+    return session ? JSON.parse(session) : null;
+};
+
+// Helper for making API requests
+const apiRequest = async (endpoint, options = {}) => {
+    const token = getToken();
+    const headers = {
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+        ...options.headers,
+    };
+
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || "Erro na requisição.");
+    }
+
+    return data;
+};
 
 const api = {
     // --- Sessão e Autenticação ---
     getSession: () => {
-        const session = localStorage.getItem("fluxity_session");
-        return session ? JSON.parse(session) : null;
+        // Return cached session for synchronous access
+        // The app should validate this with the server on load
+        return getSessionCache();
+    },
+
+    // Validate session with server (async version)
+    validateSession: async () => {
+        const token = getToken();
+        if (!token) {
+            setSessionCache(null);
+            return null;
+        }
+
+        try {
+            const data = await apiRequest("/auth/session");
+            if (data.user) {
+                setSessionCache(data.user);
+                return data.user;
+            }
+            setToken(null);
+            setSessionCache(null);
+            return null;
+        } catch {
+            setToken(null);
+            setSessionCache(null);
+            return null;
+        }
     },
 
     login: async (email, password) => {
-        await delay(500);
-        const users = JSON.parse(localStorage.getItem("fluxity_users"));
-        const user = users.find((u) => u.email === email && u.password === password);
+        const data = await apiRequest("/auth/login", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+        });
 
-        if (user) {
-            localStorage.setItem("fluxity_session", JSON.stringify(user));
-            return { success: true, user };
+        if (data.success && data.token) {
+            setToken(data.token);
+            setSessionCache(data.user);
         }
-        throw new Error("E-mail ou senha inválidos.");
+
+        return { success: true, user: data.user };
     },
 
     register: async (userData) => {
-        await delay(500);
-        const users = JSON.parse(localStorage.getItem("fluxity_users"));
-        const exists = users.find((u) => u.email === userData.email);
+        const data = await apiRequest("/auth/register", {
+            method: "POST",
+            body: JSON.stringify(userData),
+        });
 
-        if (exists) {
-            throw new Error("E-mail já cadastrado.");
+        if (data.success && data.token) {
+            setToken(data.token);
+            setSessionCache(data.user);
         }
 
-        const newUser = { 
-            ...userData, 
-            id: Date.now(),
-            avatar: "", // Campo para URL da foto
-            banner: ""  // Campo para URL do banner
-        };
-        users.push(newUser);
-        localStorage.setItem("fluxity_users", JSON.stringify(users));
-
-        localStorage.setItem("fluxity_session", JSON.stringify(newUser));
-        return { success: true, user: newUser };
+        return { success: true, user: data.user };
     },
 
-    logout: () => {
-        localStorage.removeItem("fluxity_session");
+    logout: async () => {
+        try {
+            await apiRequest("/auth/logout", { method: "POST" });
+        } catch {
+            // Ignore errors on logout
+        }
+        setToken(null);
+        setSessionCache(null);
     },
 
     // --- Usuários e Empresas ---
     updateUser: async (userId, updatedData) => {
-        await delay(500);
-        const users = JSON.parse(localStorage.getItem("fluxity_users"));
-        const index = users.findIndex((u) => u.id === userId);
+        const data = await apiRequest(`/users/${userId}`, {
+            method: "PUT",
+            body: JSON.stringify(updatedData),
+        });
 
-        if (index !== -1) {
-            const userType = users[index].type;
-            // Atualiza mantendo ID e Type
-            const updatedUser = { ...users[index], ...updatedData, type: userType };
-            
-            users[index] = updatedUser;
-            localStorage.setItem("fluxity_users", JSON.stringify(users));
-            
-            // Atualiza sessão se for o usuário logado
-            const session = JSON.parse(localStorage.getItem("fluxity_session"));
-            if (session && session.id === userId) {
-                localStorage.setItem("fluxity_session", JSON.stringify(updatedUser));
+        if (data.success && data.user) {
+            // Update cached session if it's the current user
+            const cachedSession = getSessionCache();
+            if (cachedSession && cachedSession.id === userId) {
+                setSessionCache(data.user);
             }
-            
-            return { success: true, user: updatedUser };
         }
-        throw new Error("Usuário não encontrado.");
+
+        return data;
     },
 
-    // --- Compras e Produtos ---
+    // --- Compras de PCEs ---
     createOrder: async (userId, items, total) => {
-        await delay(800);
-        const orders = JSON.parse(localStorage.getItem("fluxity_orders"));
-        
-        // Adiciona um uniqueId para cada item para permitir renomeação individual
-        const itemsWithUniqueIds = items.map(item => ({
-            ...item,
-            uniqueId: Date.now() + Math.random().toString(36).substr(2, 9),
-            customName: item.name // Nome inicial padrão
-        }));
+        const data = await apiRequest("/orders", {
+            method: "POST",
+            body: JSON.stringify({ items, total }),
+        });
 
-        const newOrder = {
-            id: Date.now(),
-            userId,
-            items: itemsWithUniqueIds,
-            total,
-            date: new Date().toISOString(),
-        };
-
-        orders.push(newOrder);
-        localStorage.setItem("fluxity_orders", JSON.stringify(orders));
-        return { success: true, order: newOrder };
+        return data;
     },
 
+    // Buscar pedidos do usuário
     getUserOrders: async (userId) => {
-        await delay(300);
-        const orders = JSON.parse(localStorage.getItem("fluxity_orders"));
-        return orders.filter((order) => order.userId === userId);
+        return await apiRequest("/orders");
     },
 
-    // Função para renomear um item comprado (PCE)
-    updateOrderItemName: async (userId, orderId, itemUniqueId, newName) => {
-        await delay(300);
-        const orders = JSON.parse(localStorage.getItem("fluxity_orders"));
-        
-        const orderIndex = orders.findIndex(o => o.id === orderId && o.userId === userId);
-        if (orderIndex !== -1) {
-            const itemIndex = orders[orderIndex].items.findIndex(i => i.uniqueId === itemUniqueId);
-            if (itemIndex !== -1) {
-                orders[orderIndex].items[itemIndex].customName = newName;
-                localStorage.setItem("fluxity_orders", JSON.stringify(orders));
-                return { success: true };
-            }
-        }
-        throw new Error("Item não encontrado.");
-    }
+    // --- PCEs Comprados (Não Cadastrados) ---
+
+    // Buscar PCEs comprados pelo usuário (todos)
+    getUserPurchasedPces: async (userId) => {
+        return await apiRequest("/pces/purchased");
+    },
+
+    // Buscar apenas PCEs NÃO cadastrados
+    getUnregisteredPces: async (userId) => {
+        return await apiRequest("/pces/unregistered");
+    },
+
+    // Contar PCEs (total comprados, cadastrados, não cadastrados)
+    getPceStats: async (userId) => {
+        return await apiRequest("/pces/stats");
+    },
+
+    // --- PCEs Cadastrados ---
+
+    // Cadastrar um PCE (usa um slot de PCE comprado não cadastrado)
+    registerPCE: async (userId, pceData) => {
+        return await apiRequest("/pces/register", {
+            method: "POST",
+            body: JSON.stringify(pceData),
+        });
+    },
+
+    // Buscar todos os PCEs cadastrados de um usuário
+    getUserPCEs: async (userId) => {
+        return await apiRequest("/pces");
+    },
+
+    // Buscar um PCE específico por ID
+    getPCEById: async (pceId) => {
+        return await apiRequest(`/pces/${pceId}`);
+    },
+
+    // Atualizar um PCE
+    updatePCE: async (userId, pceId, updatedData) => {
+        return await apiRequest(`/pces/${pceId}`, {
+            method: "PUT",
+            body: JSON.stringify(updatedData),
+        });
+    },
+
+    // Deletar um PCE (libera o slot para cadastrar novamente)
+    deletePCE: async (userId, pceId) => {
+        return await apiRequest(`/pces/${pceId}`, {
+            method: "DELETE",
+        });
+    },
+
+    // Renomear PCE (atalho)
+    renamePCE: async (userId, pceId, newName) => {
+        return await apiRequest(`/pces/${pceId}/rename`, {
+            method: "PATCH",
+            body: JSON.stringify({ nome: newName }),
+        });
+    },
+
+    // --- Funções auxiliares legadas (mantidas por compatibilidade) ---
+    addPCE: async (userId, pceData) => {
+        // Agora usa registerPCE
+        return api.registerPCE(userId, pceData);
+    },
 };
 
 export default api;

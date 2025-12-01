@@ -5,7 +5,7 @@ import NavbarVoltar from "../components/layout/NavbarVoltar";
 import Footer from "../components/layout/Footer";
 import api from "../services/api";
 import styles from "../styles/CompraPage.module.css";
-import PceDeviceImg from "../images/PCEimg.png"; 
+import PceDeviceImg from "../images/PCEimg.png";
 
 const CompraPage = () => {
     const navigate = useNavigate();
@@ -15,12 +15,10 @@ const CompraPage = () => {
     const [cardData, setCardData] = useState({
         number: "",
         expiry: "",
-        cvc: ""
+        cvc: "",
     });
 
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: "P.C.E", desc: "Contador de fluxo", price: 460.0 },
-    ]);
+    const [cartItems, setCartItems] = useState([{ id: 1, name: "P.C.E", desc: "Contador de fluxo", price: 460.0 }]);
 
     useEffect(() => {
         const session = api.getSession();
@@ -36,7 +34,7 @@ const CompraPage = () => {
 
     const handleCardChange = (e) => {
         const { name, value } = e.target;
-        setCardData(prev => ({ ...prev, [name]: value }));
+        setCardData((prev) => ({ ...prev, [name]: value }));
     };
 
     const validateCard = () => {
@@ -58,14 +56,15 @@ const CompraPage = () => {
 
     const handleCheckout = async () => {
         if (!validateCard()) return;
-        
+
         setLoading(true);
         try {
-            // Itens ganham IDs únicos dentro do createOrder no api.js
-            await api.createOrder(currentUser.id, cartItems, totalValue);
-            
-            alert("Compra realizada! Seus dispositivos estão no seu perfil. Você pode renomeá-los lá para distingui-los.");
-            navigate("/perfil"); 
+            const result = await api.createOrder(currentUser.id, cartItems, totalValue);
+
+            alert(
+                `Compra realizada com sucesso! Você comprou ${result.purchasedCount} PCE(s). Agora vá para a página de PCEs para cadastrá-los.`
+            );
+            navigate("/pce");
         } catch (error) {
             alert("Erro ao processar compra: " + error.message);
         } finally {
@@ -121,9 +120,7 @@ const CompraPage = () => {
                         <div className={styles.summaryFooter}>
                             <div className={styles.summaryCol}>
                                 <span className={styles.summaryLabel}>Valor Total:</span>
-                                <span className={styles.totalPrice}>
-                                    R$: {totalValue.toFixed(2).replace(".", ",")}
-                                </span>
+                                <span className={styles.totalPrice}>R$: {totalValue.toFixed(2).replace(".", ",")}</span>
                             </div>
                             <div className={styles.summaryCol}>
                                 <span className={styles.summaryLabel}>Unidades:</span>
@@ -144,13 +141,13 @@ const CompraPage = () => {
 
                         <div className={styles.formGroup}>
                             <label className={styles.label}>Número do Cartão</label>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 name="number"
                                 value={cardData.number}
                                 onChange={handleCardChange}
-                                className={styles.input} 
-                                placeholder="0000 0000 0000 0000" 
+                                className={styles.input}
+                                placeholder="0000 0000 0000 0000"
                                 maxLength={19}
                             />
                         </div>
@@ -158,34 +155,34 @@ const CompraPage = () => {
                         <div className={styles.row}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>Validade</label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="expiry"
                                     value={cardData.expiry}
                                     onChange={handleCardChange}
-                                    className={styles.input} 
-                                    placeholder="MM/AA" 
+                                    className={styles.input}
+                                    placeholder="MM/AA"
                                     maxLength={5}
                                 />
                             </div>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>CVC</label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     name="cvc"
                                     value={cardData.cvc}
                                     onChange={handleCardChange}
-                                    className={styles.input} 
-                                    placeholder="123" 
+                                    className={styles.input}
+                                    placeholder="123"
                                     maxLength={4}
                                 />
                             </div>
                         </div>
 
                         <div className={styles.paymentActions}>
-                            <button 
-                                className={styles.btnFinish} 
-                                onClick={handleCheckout} 
+                            <button
+                                className={styles.btnFinish}
+                                onClick={handleCheckout}
                                 disabled={loading || cartItems.length === 0}
                             >
                                 {loading ? "Processando..." : "Finalizar Compra"}

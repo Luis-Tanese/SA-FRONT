@@ -2,7 +2,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 
 .mainContent {
@@ -48,6 +48,15 @@
     font-weight: 700;
 }
 
+.availableText {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: 10px;
+}
+
 .imageContainer {
     margin-top: 2rem;
 }
@@ -63,7 +72,7 @@
 /* Lado Direito */
 .rightPanel {
     flex: 0.6;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -1,0 +1,455 @@
+/* --- LAYOUT GERAL --- */
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content-fluid {
+    flex: 1;
+    display: flex;
+}
+
+/* --- LADO ESQUERDO (Cinza) --- */
+.left-panel.panel-gray {
+    background-color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    min-height: 600px;
+}
+
+.sidebar-gray-content {
+    text-align: center;
+    color: white;
+}
+
+.gray-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.gray-subtitle {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.gray-text {
+    font-size: 0.9rem;
+    color: #aaa;
+    max-width: 300px;
+    margin: 0 auto 30px;
+}
+
+.btn-add-visual {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c70039, #900c3f);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    cursor: pointer;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    color: white;
+}
+
+.btn-add-visual:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(199, 0, 57, 0.5);
+}
+
+.add-label {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+/* --- LADO DIREITO --- */
+.right-panel {
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-state h5 {
+    color: #888;
+    font-weight: 400;
+}
+
+/* --- LISTA DE PCEs --- */
+.pce-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.pce-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    gap: 15px;
+    transition: box-shadow 0.2s;
+}
+
+.pce-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.pce-card-icon {
+    width: 60px;
+    height: 60px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.pce-card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pce-card-info {
+    flex: 1;
+}
+
+.pce-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 3px;
+}
+
+.pce-card-number {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0 0 5px;
+}
+
+.pce-card-desc {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0 0 8px;
+}
+
+.pce-card-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 0.75rem;
+    color: #555;
+}
+
+.pce-status {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.pce-status.ativo {
+    background: #d4edda;
+    color: #155724;
+}
+
+.pce-status.inativo {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.pce-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pce-action-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.pce-action-btn.edit:hover {
+    background: #e3f2fd;
+}
+
+.pce-action-btn.delete:hover {
+    background: #ffebee;
+}
+
+.pce-action-btn.edit {
+    color: #1976d2;
+}
+
+.pce-action-btn.delete {
+    color: #c0392b;
+}
+
+/* --- EDIÇÃO INLINE --- */
+.pce-edit-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pce-edit-input {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    flex: 1;
+    max-width: 200px;
+}
+
+.pce-icon-btn {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- LADO ESQUERDO (Preto com Porta) --- */
+.left-panel.panel-black {
+    background-color: #050505;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 100px;
+    overflow: hidden;
+    min-height: 750px;
+}
+
+/* Conteúdo de Texto (Fluxity) */
+.left-content {
+    padding-left: 60px;
+    z-index: 10;
+    position: relative;
+}
+
+.brand-title {
+    color: white;
+    font-weight: 800;
+    font-size: 4.5rem;
+    margin-bottom: 0;
+    line-height: 1;
+}
+
+.brand-subtitle {
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.text-wine {
+    color: #c70039;
+}
+
+/* --- CORREÇÃO DA IMAGEM --- */
+.door-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.door-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.9;
+}
+
+/* Efeito de granulação na borda direita */
+.left-panel.panel-black::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+    z-index: 20;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 992px) {
+    .main-content-fluid {
+        flex-direction: column;
+    }
+
+    .left-panel.panel-gray {
+        min-height: 300px;
+    }
+
+    .right-panel {
+        min-height: 400px;
+    }
+}
+
+/* --- ESTATÍSTICAS DE PCEs --- */
+.pce-stats-box {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-item.highlight .stat-number {
+    color: #c70039;
+    font-size: 2rem;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-transform: uppercase;
+}
+
+/* --- CONTAINER DE BOTÕES --- */
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Botão desabilitado */
+.btn-add-visual.disabled {
+    background: linear-gradient(135deg, #666, #444);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-add-visual.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Botão de comprar */
+.btn-buy-visual {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto 10px;
+    cursor: pointer;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    color: white;
+}
+
+.btn-buy-visual:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(46, 204, 113, 0.5);
+}
+
+/* --- EMPTY STATE MELHORADO --- */
+.empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.empty-hint {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.btn-empty-buy,
+.btn-empty-register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+.btn-empty-buy {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.btn-empty-buy:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+.btn-empty-register {
+    background: linear-gradient(135deg, #c70039, #900c3f);
+    color: white;
+}
+
+.btn-empty-register:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(199, 0, 57, 0.4);
+}

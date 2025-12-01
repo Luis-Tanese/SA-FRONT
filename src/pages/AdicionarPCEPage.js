@@ -1,38 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import NavbarVoltar from "../components/layout/NavbarVoltar";
 import Footer from "../components/layout/Footer";
 import api from "../services/api";
 import styles from "../styles/AdicionarPCEPage.module.css";
 // Certifique-se de ter uma imagem de porta ou use um placeholder
-import DoorImage from "../images/fundoCadastro.png"; 
+import DoorImage from "../images/fundoCadastro.png";
 
 const AdicionarPCEPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(null);
+    const [pceStats, setPceStats] = useState({ total: 0, registered: 0, unregistered: 0 });
     const [formData, setFormData] = useState({
         nome: "",
         urlImagem: "",
         numeroPCE: "",
         capacidade: "",
         endereco: "",
+        mostrarEndereco: false,
         descricao: "",
     });
 
+    const loadStats = useCallback(
+        async (userId) => {
+            try {
+                const stats = await api.getPceStats(userId);
+                setPceStats(stats);
+
+                // Se não há PCEs disponíveis, redirecionar para compras
+                if (stats.unregistered === 0) {
+                    alert("Você não possui PCEs disponíveis para cadastrar. Compre mais PCEs primeiro!");
+                    navigate("/compras");
+                }
+            } catch (error) {
+                console.error("Erro ao carregar estatísticas:", error);
+            }
+        },
+        [navigate]
+    );
+
+    useEffect(() => {
+        const session = api.getSession();
+        if (!session) {
+            alert("Você precisa estar logado para cadastrar PCEs.");
+            navigate("/login");
+            return;
+        }
+        setUser(session);
+        loadStats(session.id);
+    }, [navigate, loadStats]);
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!formData.nome || !formData.numeroPCE) {
+            alert("Por favor, preencha o nome e o número do PCE.");
+            return;
+        }
+
         setLoading(true);
         try {
-            await api.addPCE(formData);
-            alert("P.C.E adicionado com sucesso!");
-            navigate("/perfil"); // Redireciona para onde fizer sentido
+            await api.registerPCE(user.id, formData);
+            alert("P.C.E cadastrado com sucesso!");
+            navigate("/pce");
         } catch (error) {
-            alert("Erro ao adicionar P.C.E.");
+            alert("Erro ao cadastrar P.C.E: " + error.message);
         } finally {
             setLoading(false);
         }
@@ -48,8 +89,11 @@ const AdicionarPCEPage = () => {
                     <div className={styles.bannerContent}>
                         <h1 className={styles.fluxityTitle}>Fluxity</h1>
                         <h2 className={styles.subTitle}>
-                            Adicionar novos <span className={styles.highlight}>P.C.E's</span>
+                            Cadastrar <span className={styles.highlight}>P.C.E</span>
                         </h2>
+                        <p className={styles.availableText}>
+                            {pceStats.unregistered} PCE(s) disponível(is) para cadastro
+                        </p>
                         <div className={styles.imageContainer}>
                             <img src={DoorImage} alt="Porta Fluxity" className={styles.doorImage} />
                         </div>
@@ -126,7 +170,13 @@ const AdicionarPCEPage = () => {
                         <div className={styles.checkboxWrapper}>
                             <label className={styles.checkboxLabel}>
                                 mostrar endereço?
-                                <input type="checkbox" className={styles.checkbox} />
+                                <input
+                                    type="checkbox"
+                                    name="mostrarEndereco"
+                                    checked={formData.mostrarEndereco}
+                                    onChange={handleChange}
+                                    className={styles.checkbox}
+                                />
                             </label>
                         </div>
 
@@ -142,14 +192,14 @@ const AdicionarPCEPage = () => {
                         </div>
 
                         <div className={styles.actions}>
-                            <button type="submit" className={styles.btnAdd} disabled={loading}>
-                                {loading ? "Adicionando..." : "Adicionar P.C.E."}
-                            </button>
                             <button
-                                type="button"
-                                className={styles.btnCancel}
-                                onClick={() => navigate(-1)}
+                                type="submit"
+                                className={styles.btnAdd}
+                                disabled={loading || pceStats.unregistered === 0}
                             >
+                                {loading ? "Cadastrando..." : "Cadastrar P.C.E."}
+                            </button>
+                            <button type="button" className={styles.btnCancel} onClick={() => navigate("/pce")}>
                                 cancelar
                             </button>
                         </div>

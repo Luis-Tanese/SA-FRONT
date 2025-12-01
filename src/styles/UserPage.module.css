@@ -11,7 +11,7 @@
 .banner {
     width: 100%;
     height: 250px;
-    background-color: #380016; 
+    background-color: #380016;
     position: relative;
 }
 
@@ -30,7 +30,7 @@
     display: flex;
     gap: 2rem;
     align-items: flex-end;
-    margin-top: -80px; 
+    margin-top: -80px;
     margin-bottom: 2rem;
     position: relative;
     z-index: 2;
@@ -71,7 +71,7 @@
 .userName {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #000; 
+    color: #000;
     margin-bottom: 0.5rem;
     transition: color 0.3s;
 }
@@ -180,12 +180,12 @@
 
 .submitBtn {
     width: 100%;
-    background-color: #a00037; 
+    background-color: #a00037;
     color: white;
     font-weight: 700;
     font-size: 1.1rem;
     border: none;
-    border-radius: 8px; 
+    border-radius: 8px;
     padding: 12px;
     margin-top: 1rem;
     cursor: pointer;
@@ -229,7 +229,7 @@
     background-color: #fff;
     padding: 10px;
     border-radius: 50%;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -289,6 +289,68 @@
     padding: 4px;
     display: flex;
     align-items: center;
+}
+
+/* --- Novos estilos para PCEs --- */
+.pcesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+}
+
+.addPceBtn {
+    background-color: #380016;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.addPceBtn:hover {
+    background-color: #5a0025;
+}
+
+.emptyPces {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.addFirstPceBtn {
+    background-color: #380016;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: background 0.2s;
+}
+
+.addFirstPceBtn:hover {
+    background-color: #5a0025;
+}
+
+.deletePceBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.deletePceBtn:hover {
+    background: #ffebee;
 }
 
 @media (max-width: 900px) {

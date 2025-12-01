@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import CadastroPage from "./pages/CadastroPage";
 import AdicionarPCEPage from "./pages/AdicionarPCEPage";
 import CompraPage from "./pages/CompraPage";
+import PagePceWithRegistration from "./pages/PagePceWithRegistration";
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/cadastro" element={<CadastroPage />} />
-                
+
                 {/* Rotas de Usuário Logado */}
                 <Route path="/perfil" element={<UserPage />} />
                 <Route path="/adicionar-pce" element={<AdicionarPCEPage />} />
@@ -25,6 +26,10 @@ function App() {
                 {/* Rotas de Empresa */}
                 <Route path="/empresa" element={<Empresa />} />
                 <Route path="/perfilEmpresa" element={<EmpresaPage />} />
+
+                {/* Rotas de PCE */}
+                <Route path="/pce" element={<PagePceWithRegistration />} />
+                <Route path="/adicionar-pce" element={<AdicionarPCEPage />} />
             </Routes>
         </div>
     );

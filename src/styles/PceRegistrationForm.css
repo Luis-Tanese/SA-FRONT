@@ -1,0 +1,231 @@
+/* Estrutura Geral */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-content-fluid {
+    flex: 1;
+    overflow: hidden;
+}
+
+/* --- SIDEBAR BASE --- */
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 700px;
+    transition: background-color 0.5s ease; /* Transição suave de cor */
+    overflow: hidden;
+}
+
+/* ESTADO 1: SIDEBAR CINZA */
+.left-panel.panel-gray {
+    background-color: #e0e0e0;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: left;
+}
+
+.sidebar-gray-content {
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha tudo à esquerda */
+}
+
+.gray-title {
+    color: #4a0a23; /* Vinho escuro */
+    font-weight: 800;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.gray-subtitle {
+    color: #000;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.gray-text {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+
+/* Botão "+" Visual da Sidebar Cinza */
+.btn-add-visual {
+    width: 280px;
+    height: 60px;
+    background-color: #fff;
+    border: 3px solid #4a0a23; /* Borda grossa vinho */
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4a0a23;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 10px;
+    align-self: center; /* Centraliza o botão no container */
+}
+
+.btn-add-visual:hover {
+    transform: scale(1.02);
+}
+
+.add-label {
+    font-size: 1rem;
+    color: #333;
+    align-self: center;
+    font-weight: 500;
+}
+
+/* ESTADO 2: SIDEBAR PRETA */
+.left-panel.panel-black {
+    background-color: #080808;
+    justify-content: flex-start;
+    padding-top: 80px;
+}
+
+.sidebar-black-content {
+    padding-left: 60px;
+    z-index: 2;
+    color: white;
+}
+
+.brand-title {
+    font-weight: 800;
+    font-size: 4rem;
+}
+
+.brand-subtitle {
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.text-wine {
+    color: #990033;
+}
+
+/* Imagem da Porta (Só aparece no modo preto) */
+.door-image-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1;
+}
+
+.door-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    mask-image: linear-gradient(to top, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, black 80%, transparent 100%);
+}
+
+/* --- LADO DIREITO --- */
+.right-panel {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Estado Vazio */
+.empty-state {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Formulário */
+.form-wrapper {
+    max-width: 600px;
+    width: 100%;
+}
+
+.custom-input {
+    background-color: #e6e6e6;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+}
+
+.custom-input:focus {
+    background-color: #dcdcdc;
+    box-shadow: none;
+    outline: none;
+}
+
+.url-box {
+    width: 100%;
+    height: 110px;
+    background-color: #d6d6d6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.url-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.btn-custom-submit {
+    background-color: #990033;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 12px 0;
+    width: 100%;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+
+.btn-custom-submit:hover {
+    background-color: #750026;
+}
+
+.cancel-text {
+    color: #000;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.cancel-text:hover {
+    text-decoration: underline;
+}
+
+.resize-none {
+    resize: none;
+}
+
+/* Animação de entrada suave */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
